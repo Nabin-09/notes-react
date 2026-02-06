@@ -1,35 +1,35 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from 'react'
 
-function App() {
-  const [count, setCount] = useState(0)
-
+const App = () => {
+  const submitHandler = (e)=>{
+    e.preventDefault();
+    console.log(`Form submitted`)
+  }
   return (
-    <>
+    <div className='h-screen bg-black text-white'>
+      <form onSubmit={(e)=>{
+        submitHandler(e)
+      }} className='flex gap-4 flex-col  justify-between items-start p-10'>
+
+          <input
+            type="text"
+            placeholder='Enter Notes heading'
+            className='px-5 font-medium w-full py-2 outline-none border-2 rouded'
+          />
+          <textarea
+            type="text"
+            className='h-32 w-full px-5 font-medium py-2 flex items-start flex-row  border-2 outline-none rounded'
+            placeholder ='Enter Details...  '
+          />
+          <button className='bg-white w-full text-black  px-5 py-2 rounded outline-none'>Add Notes</button>
+
+        {/* <img className='h-52' src="data:image/jpeg;base64,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" alt="" /> */}
+      </form>
       <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </div>
   )
 }
 
-export default App
+export default App  
