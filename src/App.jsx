@@ -1,12 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const App = () => {
+  const [title , setTitle] = useState('')
+  const [details , setDetails] = useState('');
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log(`Form submitted`)
+    console.log(title , details)
+
+    setTitle('')
+    setDetails('')
   }
 
-  
+
   return (
     <div className='h-screen lg:flex bg-black text-white'>
      
@@ -14,15 +19,23 @@ const App = () => {
         submitHandler(e)
       }} className='flex gap-4 flex-col lg:w-1/2 items-start p-10'>
          <h1 className='text-3xl font-bold'>Add Notes</h1>
+
+         {/* first input */}
         <input
           type="text"
           placeholder='Enter Notes heading'
           className='px-5 font-medium w-full py-2 outline-none border-2 rouded'
+          value={title}
+          onChange={(e)=>{setTitle(e.target.value)}}
         />
+
+        {/* body */}
         <textarea
           type="text"
           className='h-32 w-full px-5 font-medium py-2 flex items-start flex-row  border-2 outline-none rounded'
           placeholder='Enter Details...  '
+          value={details}
+          onChange={(e)=>{setDetails(e.target.value)}}
         />
         <button className='bg-white w-full text-black  px-5 py-2 rounded outline-none'>Add Notes</button>
 
