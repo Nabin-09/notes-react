@@ -9,16 +9,25 @@ const App = () => {
   const submitHandler = (e) => {
     e.preventDefault();
 
-    const copyTask = [...task]
-    copyTask.push({ title, details })
+
+    if (!title.trim() && !details.trim()) {
+      return;
+    }
+
+    setTask([...task, { title, details }]);
+
+    setTitle('');
+    setDetails('');
+  };
+
+
+  const deleteNote = (idx) => {
+    console.log(`Note deleted`);
+    const copyTask = [...task];
+
+    copyTask.splice(idx, 1);
     setTask(copyTask)
 
-    setTitle('')
-    setDetails('')
-  }
-
-  const deleteNote = ()=>{
-    console.log(`Note deleted`);
 
   }
 
@@ -58,15 +67,33 @@ const App = () => {
       <div className=' lg:w-1/2 gap-5  lg:border-l-2 flex-wrap p-10'>
         <h1 className='text-xl font-bold'>Your Notes</h1>
         <div className="flex flex-wrap items-start justify-start gap-5 mt-5 h-[90%] overflow-auto">
-          {task.map(function (elem, idx) {
-            return <div key={idx} className='h-60 w-40 flex justify-between flex-col items-start rounded-xl text-black pt-9 pb-4 px-4 bg-white'>
+          {task.map((elem, idx) => (
+            <div
+              key={idx}
+              className="min-w-[10rem] max-w-[16rem] flex justify-between flex-col rounded-xl text-black p-4 bg-white break-words"
+            >
               <div>
-                <h3 className='leading-tight text-xl font-bold'>{elem.title}</h3>
-                <p className='mt-4 leading-tight font-medium text-gray-500'>{elem.details}</p>
+                {elem.title && (
+                  <h3 className="text-lg font-bold leading-tight">
+                    {elem.title}
+                  </h3>
+                )}
+
+                {elem.details && (
+                  <p className="mt-2 text-sm font-medium text-gray-500 leading-tight">
+                    {elem.details}
+                  </p>
+                )}
               </div>
-              <button onClick={deleteNote} className='w-full py-1 cursor-pointer active:scale-95 text-xs rounded font-bold bg-red-500 text-white'>Delete</button>
+
+              <button
+                onClick={() => deleteNote(idx)}
+                className="mt-3 w-full py-1 text-xs rounded font-bold bg-red-500 text-white active:scale-95"
+              >
+                Delete
+              </button>
             </div>
-          })}
+          ))}
         </div>
 
       </div>
