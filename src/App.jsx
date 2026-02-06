@@ -1,21 +1,23 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+
 
 const App = () => {
   const [title, setTitle] = useState('')
   const [details, setDetails] = useState('');
-  const [task, setTask] = useState([])
+  const [task, setTask] = useState(() => {
+    const savedNotes = localStorage.getItem('notes');
+    return savedNotes ? JSON.parse(savedNotes) : [];
+  });
 
+    useEffect(() => {
+    localStorage.setItem('notes', JSON.stringify(task));
+  }, [task]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-
-
-    if (!title.trim() && !details.trim()) {
-      return;
-    }
+    if (!title.trim() && !details.trim()) return;
 
     setTask([...task, { title, details }]);
-
     setTitle('');
     setDetails('');
   };
